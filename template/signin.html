@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/signin.css">
+    <script defer src="../front_script/signin.js"></script>
     <title>sign in</title>
 </head>
 <body>
     <div>
         <h2>Sign in</h2>
         <h5>Stay updated on your professional world</h5>
-        <input type="email" placeholder="Email or Phone">
-        <input type="password" placeholder="Password">
-        <a><p>Forget Password?</p></a>
-        <button>Sign in</button>
+        <form >
+            <input type="email" name="email" placeholder="Email or Phone">
+            <input type="password" placeholder="Password" name="password">    
+            <a><p>Forget Password?</p></a>
+            <button type="submit">Sign in</button>    
+        </form>
     </div>
     <a href="../index.html"><img src="../images/linkdin_logo.png"></a>
 </body>
