@@ -4,19 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/signup.css">
+    <script defer src="../front_script/signup.js"></script>
     <title>sign in</title>
 </head>
 <body>
     <h2> Make the most of your professional life </h2>
     <section>
     <div>
-        <label for="email">Email</label>
-        <input type="email" name="email">
-        <label for="password">Password (6+ characters)</label>
-        <input type="password" name="password">
-        <p> By clicking Agree & Join, you agree to the LinkedIn Policy</p>
-        <button>Agree & Join</button>
+        <form >
+            <label for="first_name">first_name</label>
+            <input type="text" name="first_name" required>
+            <label for="last_name">last_name</label>
+            <input type="text" name="last_name"required>
+            <label for="email">Email</label>
+            <input type="email" name="email" required>
+            <label for="password">Password (6+ characters)</label>
+            <input type="password" name="password" required>
+            <label for="country">country</label>
+            <input type="text" name="country" required>
+            <label for="city">city</label>
+            <input type="text" name="city" required>
+            <label for="job_title">job_title</label>
+            <input type="text" name="job_title" required>
+            <p> By clicking Agree & Join, you agree to the LinkedIn Policy</p>
+            <button>Agree & Join</button>
+        </form>
         <p> Already on LinkedIn?</p> <a href="signin.html"> Sign in </a>
+        <p id="error">this email is already used</p>
     </div>
     </section>
     <a href="../index.html"><img src="../images/linkdin_logo.png"></a>

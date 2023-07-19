@@ -63,3 +63,8 @@ img{
     top: 0.8rem;
     left: 3.2rem;
 }
+#error{
+    color: rgb(247, 68, 68);
+    visibility:hidden;
+    margin-bottom: 0.3rem;
+}

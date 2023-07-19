@@ -1,7 +1,14 @@
 <?php
 include 'db.php';
 class User{
-    public function __construct(private ?string $first_name,private ?string $last_name,private string $email,private string $password,private ?string $country,private ?string $city, private ?string $job_title,private $conn){}
+    public function __construct(private ?int $id,private ?string $first_name,private ?string $last_name,private string $email,private string $password,private ?string $country,private ?string $city, private ?string $job_title,private $conn){}
+    public function getId() :int{
+        return $this->id;
+    }
+    public function setId($id){
+        $this->id=$id;
+    }
+
     public function getFirst_name() :string{
         return $this->first_name;
     }
@@ -47,17 +54,30 @@ class User{
     public function setJob_title($job_title){
         $this->job_title=$job_title;
     }
-    public function createUser(){
-        $sign_up=$this->conn->prepare("INSERT INTO users (first_name, last_name, email, password, country,city, job_title) Values(?, ?, ?, ?, ?, ?, ?)");
-        $sign_up->bind_param("ssssssss",$this->first_name, $this->last_name, $this->email, $this->password, $this->country, $this->city, $this->job_title);
+    public function createUser(): bool {
+        $sql = "SELECT id FROM users WHERE email='$this->email'";
+        $result = $this->conn->query($sql);    
+        if (mysqli_num_rows($result) > 0) {
+            return false;
+        }    
+        $sign_up = $this->conn->prepare("INSERT INTO users (first_name, last_name, email, password, country, city, job_title) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $sign_up->bind_param("sssssss", $this->first_name, $this->last_name, $this->email, $this->password, $this->country, $this->city, $this->job_title);
+            if ($sign_up->execute()) {
+            $insertedId = $this->conn->insert_id;
+            $this->setId($insertedId);    
+            return true;
+        } else {
+            return false;
+        }
     }
     public function checkUser() : bool{
         $sql="SELECT id FROM users WHERE email='$this->email' AND password='$this->password'";
-        $result = $this->conn->query($sql); 
+        $result = $this->conn->query($sql);
         if(mysqli_num_rows($result)==0){
-            return null; 
+            return false; 
         }
-        return $result->fetch_array(MYSQLI_BOTH)['id'];
+        $this->setId($result->fetch_array(MYSQLI_BOTH)['id']); 
+        return true;
     }
 }
 ?>

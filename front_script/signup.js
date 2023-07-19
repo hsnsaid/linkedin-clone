@@ -1,11 +1,11 @@
-const form = document.querySelector("form");
-const btn = document.querySelector("button");
+const form=document.querySelector("form");
+const btn=document.querySelector("button");
 const error=document.getElementById("error");
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const xml = new XMLHttpRequest();
-    const formData = new FormData(form);
-    xml.open("POST", "../back_script/signin.php");
+    const xml=new XMLHttpRequest();
+    const formdata= new FormData(form);
+    xml.open("POST","../back_script/signup.php");
     xml.onreadystatechange = function () {
         if (xml.readyState === 4 && xml.status === 200) {
             let response = JSON.parse(xml.response);
@@ -17,5 +17,5 @@ form.addEventListener("submit", (event) => {
             }
         }        
     }
-    xml.send(formData);
+    xml.send(formdata);
 })
