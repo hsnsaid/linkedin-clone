@@ -9,7 +9,7 @@ if($_SESSION['active']!=true){
 else{
     $descripation=$_POST['descripation'];
     $date = date('d-m-y h:i:s');
-    $post=new post(null,$descripation,$_SESSION['user_id'],$date,$conn);
+    $post=new post(null, $descripation, $date, $_SESSION['id'], $conn);
     $post->addPost();
 }
 ?>

@@ -7,7 +7,7 @@ if($_SESSION['active']!=true){
     header('location: ../index.html');
 }
 else{
-    $post=new post(null, null, $_SESSION['user_id'], null, $conn);
+    $post=new post(null, null, null,$_SESSION['id'], $conn);
     $response=$post->showPost();
     echo json_encode($response);
 }
