@@ -7,9 +7,8 @@ if($_SESSION['active']!=true){
     header('location: ../index.html');
 }
 else{
-    $search=$_POST['search'];
-    $job=new job(null, $search, null, null, null, null, null, null, $conn);
-    $response=$job->showJob();
-    echo json_encode($response);
+    $request=file_get_contents("php://input");
+    $id= json_decode($request, TRUE);
+    $_SESSION['job_id']=$id;
 }
 ?>

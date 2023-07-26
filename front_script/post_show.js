@@ -2,7 +2,6 @@ const container=document.querySelector(".main_container_3");
 async function receive(){
     const response=await fetch("../back_script/post_show.php");
     const datas=await response.json();
-    console.log(datas);
     for(const data of datas){
         container.innerHTML+=`<div class="container">
         <div class="main_container_3_flex">

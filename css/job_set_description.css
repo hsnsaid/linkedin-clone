@@ -1,0 +1,76 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: #38434f;
+
+}
+nav{
+    background-color: #ffffff;
+    display: flex;
+    gap: 1rem;
+    height: 8vh;
+    align-items: center;
+    padding: 1.7rem 7.5rem;
+}
+.fa-user-circle-o{
+    margin-left: 93%;
+}
+.container{
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+}
+.container div{
+    border: none;
+    border-radius: 7px;
+    padding: 1.6rem 1.4rem;
+    background-color: #ffffff;
+}
+h3{
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #0a66c2;
+}
+p{
+    font-size: 0.8rem;
+    margin-bottom: 1.1rem;
+}
+label{
+    color: #535353;
+    font-size: 0.9rem;
+}
+
+textarea{
+    display: block;
+    width: 21rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.8rem;
+    outline: none;
+    font-size: 0.9rem;
+    border: 1px solid rgba(0,0,0,0.64);
+    border-radius: 3px;
+    text-align:left;
+    padding: 0.3rem 0.5rem;
+}
+button{
+    padding: 0.7rem 5.9rem;
+    border: 1px solid #0a66c2;
+    border-radius: 2rem;
+    cursor: pointer;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bolder;
+    margin-bottom: 0.5rem;      
+    background-color: #0a66c2;
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-left: 10%;
+}
+button:hover{
+    background-color: hsl(210, 91%, 27%);
+    transition: all ease-in 300ms;
+}

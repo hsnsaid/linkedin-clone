@@ -3,9 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/post_job.css">
+    <script defer src="../front_script/job_add.js"></script>
     <title>post a job</title>
 </head>
 <body>
-    
+    <nav>
+        <a href="home.html"><i class="fa fa-linkedin-square" style="color: rgb(47, 92, 218); font-size:2.5rem"></i></a>
+        <i class="fa fa-user-circle-o" style="display: block ; font-size:1.8rem ; color: black;"></i>
+    </nav>
+    <section class="container">
+        <div>
+        <h3>  Post a job now</h3>
+        <p> Rated #1 in increasing quality of hire.</p>
+        <form action="">
+            <label for="Job_title">Job title</label>
+            <input type="text" name="Job_title" placeholder="add a title you are hiring for" required>
+            <label for="Company">Company</label>
+            <input type="text" name="Company"required>
+            <label for=" Workplace_type"> Workplace type </label>
+            <select name=" Workplace_type" id="">
+                <option value="on_site">on_site</option>
+                <option value="hyprid">hyprid</option>
+                <option value="remote">remote</option>
+            </select>
+            <label for="Job_location"> Job location </label>
+            <input type="text" name="Job_location" required>
+            <label for=" Job_type"> Job type</label>
+            <select name="Job_type" id="">
+                <option value="full_time">full_time</option>
+                <option value="part_time">part_time</option>
+                <option value="contract">contract</option>
+                <option value="permintly">permintly</option>
+            </select> 
+            <button>Get Start for Free</button>
+        </form>
+    </div>
+    </section>
 </body>
 </html>
