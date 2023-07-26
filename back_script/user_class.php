@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 class User{
-    public function __construct(private ?int $id,private ?string $first_name,private ?string $last_name,private string $email,private string $password,private ?string $country,private ?string $city, private ?string $job_title,private $conn){}
+    public function __construct(private ?int $id,private ?string $first_name,private ?string $last_name,private ?string $email,private ?string $password,private ?string $country,private ?string $city, private ?string $job_title,private $conn){}
     public function getId() :int{
         return $this->id;
     }
@@ -78,6 +78,12 @@ class User{
         }
         $this->setId($result->fetch_array(MYSQLI_BOTH)['id']); 
         return true;
+    }
+    public function showUser(){
+        $sql="SELECT * FROM users WHERE id='$this->id'";
+        $result = $this->conn->query($sql);
+        $response=$result->fetch_array(MYSQLI_ASSOC);
+        return $response;
     }
 }
 ?>

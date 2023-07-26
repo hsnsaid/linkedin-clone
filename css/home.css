@@ -178,3 +178,48 @@ button{
     background-color: #ffffff;
     margin-left: 18%;
 }
+.profiel_info{
+    width: 16%;
+    position:fixed;
+    left: 61%;
+    z-index: 3;
+    border: 1px solid #999797;
+    /* border-radius: px; */
+    background-color: #ffffff;
+    padding: 0.4rem 0.6rem;
+    display: none;
+    box-shadow: 0px 0px 2px -1px rgb(5,5,5);
+}
+.profiel_info .flex_container{
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    width: 100%;
+}
+.flex_container div h5{
+    margin-bottom: 0;
+}
+.flex_container div h5{
+    margin-bottom: 0.2rem;
+    padding: 0;
+}
+.profiel_info button{
+    width: 100%;
+    margin: 0.5rem 0;
+}
+.profiel_info hr{
+    margin-bottom: 0.4rem;
+}
+.profiel_info a{
+    color: black;
+
+}
+.profiel_info a:hover{
+    text-decoration: underline;
+}
+.me{
+    cursor: pointer;
+}
+#full_name{
+    font-size: 1rem;
+}

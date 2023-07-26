@@ -51,7 +51,7 @@ class Job{
         $this->Workplace_type=$Workplace_type;
     }
     public function showJob(){
-        $sql="SELECT title,Company_name,Job_location,Workplace_type FROM jobs WHERE title='$this->title' ORDER BY id DESC";
+        $sql="SELECT title,Company_name,Job_location,Workplace_type, time_of_it, description FROM jobs WHERE title LIKE'%$this->title%' ORDER BY id DESC";
         $result=$this->conn->query($sql);
         $response=$result->fetch_all(MYSQLI_ASSOC);
         return $response;
