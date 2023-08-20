@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 class Job{
-    public function __construct(private ?int $id, private ?string $title, private ?string $description ,private ?string $Job_type, private ?string $Job_location , private ?string $Company_name ,private ?string $time_of_it, private ?string $Workplace_type,private $conn){}
+    public function __construct(private ?int $id, private ?string $title, private ?string $description ,private ?string $Job_type, private ?string $Job_location , private ?string $Company_name ,private ?string $time_of_it, private ?string $Workplace_type){}
     public function getId() :int{
         return $this->id;
     }
@@ -50,32 +50,42 @@ class Job{
     public function setWorkplace_type($Workplace_type){
         $this->Workplace_type=$Workplace_type;
     }
-    public function showJob(){
-        $sql="SELECT title,Company_name,Job_location,Workplace_type, time_of_it, description FROM jobs WHERE title LIKE'%$this->title%' ORDER BY id DESC";
-        $result=$this->conn->query($sql);
-        $response=$result->fetch_all(MYSQLI_ASSOC);
+    public function showJob($pdo){
+        $result=$pdo->prepare("SELECT title,Company_name,Job_location,Workplace_type, time_of_it, description FROM jobs WHERE title LIKE :title ORDER BY id DESC");
+        $searchTitle = '%' . $this->title . '%';
+        $result->bindValue(":title", $searchTitle);
+        $result->execute();
+        $response=$result->fetchAll(PDO::FETCH_ASSOC);
         return $response;
     }
-    public function showJobDetails(){
-        $sql="SELECT * FROM jobs WHERE id='$this->id' ORDER BY id DESC";
-        $result=$this->conn->query($sql);
-        $response=$result->fetch_all(MYSQLI_ASSOC);
+    public function showJobDetails($pdo){
+        $result=$pdo->prepare("SELECT * FROM jobs WHERE id=:id ORDER BY id DESC");
+        $result->bindValue(":id", $this->id);
+        $result->execute();
+        $response=$result->fetchAll(PDO::FETCH_ASSOC);
         return $response;
     } 
-    public function addJob(){
-        $add=$this->conn->prepare("INSERT INTO jobs (title,  Job_type, Job_location, Company_name, Workplace_type, time_of_it) VALUES(?, ?, ?, ?, ?, ?)");
-        $add->bind_param("ssssss", $this->title, $this->Job_type, $this->Job_location, $this->Company_name, $this->Workplace_type, $this->time_of_it,);
+    public function addJob($pdo){
+        $add = $pdo->prepare("INSERT INTO jobs (title,  Job_type, Job_location, Company_name, Workplace_type, time_of_it) VALUES (:title, :Job_type, :Job_location, :Company_name, :Workplace_type, :time_of_it)");
+        $add->bindValue(":title", $this->title);
+        $add->bindValue(":Job_type", $this->Job_type);
+        $add->bindValue(":Job_location", $this->Job_location);
+        $add->bindValue(":Company_name", $this->Company_name);
+        $add->bindValue(":Workplace_type", $this->Workplace_type);
+        $add->bindValue(":time_of_it", $this->time_of_it);
         $add->execute();
-        $insertedId = $this->conn->insert_id;
+        $insertedId = $pdo->lastInsertId();
         $this->setId($insertedId);    
     }
-    public function updateDescription(){
-        $update = $this->conn->prepare("UPDATE jobs SET description = ? WHERE id = ?");
-        $update->bind_param("si", $this->description, $this->id);
+    public function updateDescription($pdo){
+        $update = $pdo->prepare("UPDATE jobs SET description = :description WHERE id = :id");
+        $update->bindValue(":description", $this->description);
+        $update->bindValue(":id",$this->id);
         $update->execute();
     }
-    public function deletePost(){
-        $delete="DELETE from posts WHERE id='$this->user_id'";
-        $result=$this->conn->query($delete);
+    public function deletePost($pdo){
+        $delete = $pdo->prepare("DELETE from posts WHERE id= :id");
+        $delete->bindValue(":id",$this->id);
+        $delete->execute();
     }
 }

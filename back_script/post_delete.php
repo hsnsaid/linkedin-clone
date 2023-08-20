@@ -9,7 +9,7 @@ if($_SESSION['active']!=true){
 else{
     $descripation=$_POST['descripation'];
     $date=$_POST['date'];
-    $post=new post(null, $descripation, $_SESSION['user_id'], $date, $conn);
-    $post->deletePost();
+    $post=new post(null, $descripation, $_SESSION['user_id'], $date);
+    $post->deletePost($pdo);
 }
 ?>

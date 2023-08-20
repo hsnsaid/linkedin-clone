@@ -8,8 +8,8 @@ if($_SESSION['active']!=true){
 }
 else{
     $search=$_SESSION["search"];
-    $job=new job(null, $search, null, null, null, null, null, null, $conn);
-    $response=$job->showJob();
+    $job=new job(null, $search, null, null, null, null, null, null);
+    $response=$job->showJob($pdo);
     echo json_encode($response);
 }
 ?>

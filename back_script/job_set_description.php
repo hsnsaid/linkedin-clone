@@ -8,7 +8,7 @@ if($_SESSION['active']!=true){
 }
 else{
     $description=$_POST['description'];
-    $job=new Job($_SESSION['job_id'], null, $description, null, null, null, null, null, $conn);
-    $job->updateDescription();
+    $job=new Job($_SESSION['job_id'], null, $description, null, null, null, null, null);
+    $job->updateDescription($pdo);
 }
 ?>

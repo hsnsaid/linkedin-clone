@@ -7,7 +7,7 @@ if($_SESSION['active']!=true){
     header('location: ../index.html');
 }
 else{
-    $post=new post(null, null, null,$_SESSION['id'], $conn);
-    $response=$post->showPost();
+    $post=new post(null, null, null,$_SESSION['id']);
+    $response=$post->showPost($pdo);
     echo json_encode($response);
 }

@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 class Post{
-    public function __construct(private ?int $id,private ?string $descripation,private ?string $date,private int $user_id,private $conn){}
+    public function __construct(private ?int $id,private ?string $descripation,private ?string $date,private int $user_id){}
     public function getId() :int{
         return $this->id;
     }
@@ -26,20 +26,27 @@ class Post{
     public function setDate($id){
         $this->id=$id;
     }
-    public function showPost(){
-        $sql="SELECT last_name,descripation,post_date FROM posts join users WHERE users.id =posts.user_id AND user_id='$this->user_id' ORDER BY posts.id DESC";
-        $result=$this->conn->query($sql);
-        $response=$result->fetch_all(MYSQLI_ASSOC);
+    public function showPost($pdo){
+        $result=$pdo->prepare("SELECT last_name,descripation,post_date FROM posts join users WHERE users.id =posts.user_id AND user_id=:user_id ORDER BY posts.id DESC");
+        $result->bindParam(":user_id",$this->user_id);
+        $result->execute();
+        $response=$result->fetchAll(PDO::FETCH_ASSOC);
         return $response;
     } 
-    public function addPost(){
-        $add=$this->conn->prepare("INSERT INTO posts (descripation, user_id, post_date) VALUES(?, ?, ?)");
-        $add->bind_param("sis", $this->descripation, $this->user_id, $this->date);
+    public function addPost($pdo){
+        $add=$pdo->prepare("INSERT INTO posts (descripation, user_id, post_date) VALUES(:descripation, :user_id, :post_date)");
+        $add->bindValue(":descripation",$this->descripation);
+        $add->bindValue(":user_id",$this->user_id);
+        $add->bindValue(":post_date",$this->date);
         $add->execute();
     }
-    public function deletePost(){
+    public function deletePost($pdo){
         $delete="DELETE from posts WHERE user_id='$this->user_id' AND descripation='$this->descripation' AND post_date='$this->date'";
-        $result=$this->conn->query($delete);
+        $delete=$pdo->prepare("DELETE from posts WHERE descripation=:descripation AND user_id:user_id AND post_date=:post_date)");
+        $delete->bindParam(":descripation",$this->descripation);
+        $delete->bindParam(":user_id",$this->user_id);
+        $delete->bindParam(":post_date",$this->date);
+        $delete->execute();
     }
 }
 ?>

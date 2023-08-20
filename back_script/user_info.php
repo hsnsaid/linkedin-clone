@@ -7,7 +7,7 @@ if($_SESSION['active']!=true){
     header('location: ../index.html');
 }
 else{
-    $user=new User( $_SESSION['id'], null, null, null, null, null, null, null,$conn);
-    $response=$user->showUser();
+    $user=new User( $_SESSION['id'], null, null, null, null, null, null, null);
+    $response=$user->showUser($pdo);
     echo json_encode($response);
 }

@@ -8,8 +8,8 @@ $password= $_POST['password'];
 $country= $_POST['country'];
 $city= $_POST['city'];
 $job_title= $_POST['job_title'];
-$user=new User(null,$first_name,$last_name,$email,$password,$country,$city,$job_title,$conn);
-if($user->createUser()==true){
+$user=new User(null,$first_name,$last_name,$email,$password,$country,$city,$job_title);
+if($user->createUser($pdo)==true){
     session_start();
     $_SESSION['active'] = true;
     $_SESSION['id']=$user->getId();

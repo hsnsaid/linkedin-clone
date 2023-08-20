@@ -1,6 +1,9 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "Linkedin_clone");
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+try{
+  $dns="mysql:host=localhost;user=root;dbname=Linkedin_clone";
+  $pdo=new PDO($dns);
+}
+catch(PDOException $e){
+  throw new Exception($e->Message());
 }
 ?>

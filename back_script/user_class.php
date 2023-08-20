@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 class User{
-    public function __construct(private ?int $id,private ?string $first_name,private ?string $last_name,private ?string $email,private ?string $password,private ?string $country,private ?string $city, private ?string $job_title,private $conn){}
+    public function __construct(private ?int $id,private ?string $first_name,private ?string $last_name,private ?string $email,private ?string $password,private ?string $country,private ?string $city, private ?string $job_title){}
     public function getId() :int{
         return $this->id;
     }
@@ -54,35 +54,45 @@ class User{
     public function setJob_title($job_title){
         $this->job_title=$job_title;
     }
-    public function createUser(): bool {
-        $sql = "SELECT id FROM users WHERE email='$this->email'";
-        $result = $this->conn->query($sql);    
-        if (mysqli_num_rows($result) > 0) {
+    public function createUser($pdo): bool {
+        $result=$pdo->prepare("SELECT id FROM users WHERE email=:email");
+        $result->bindParam(":email",$this->email);
+        $result->execute();
+        if ($result->rowCount() >0) {
             return false;
         }    
-        $sign_up = $this->conn->prepare("INSERT INTO users (first_name, last_name, email, password, country, city, job_title) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $sign_up->bind_param("sssssss", $this->first_name, $this->last_name, $this->email, $this->password, $this->country, $this->city, $this->job_title);
-            if ($sign_up->execute()) {
-            $insertedId = $this->conn->insert_id;
+        $sign_up = $pdo->prepare("INSERT INTO users (first_name, last_name, email, password, country, city, job_title) VALUES (:first_name, :last_name, :email, :password, :country, :city, :job_title)");
+        $sign_up->bindParam(":first_name", $this->first_name);
+        $sign_up->bindParam(":last_name", $this->last_name);
+        $sign_up->bindParam(":email", $this->email);
+        $sign_up->bindParam(":password", $this->password);
+        $sign_up->bindParam(":country", $this->country);
+        $sign_up->bindParam(":city", $this->city);
+        $sign_up->bindParam(":job_title", $this->job_title);
+        if ($sign_up->execute()) {
+            $insertedId = $pdo->lastInsertId();
             $this->setId($insertedId);    
             return true;
         } else {
             return false;
         }
     }
-    public function checkUser() : bool{
-        $sql="SELECT id FROM users WHERE email='$this->email' AND password='$this->password'";
-        $result = $this->conn->query($sql);
-        if(mysqli_num_rows($result)==0){
-            return false; 
-        }
-        $this->setId($result->fetch_array(MYSQLI_BOTH)['id']); 
+    public function checkUser($pdo) : bool{
+        $result=$pdo->prepare("SELECT id FROM users WHERE email=:email AND password=:password");
+        $result->bindParam(":email",$this->email);
+        $result->bindParam(":password",$this->password);
+        $result->execute();
+        if ($result->rowCount() == 0) {
+            return false;
+        }    
+        $this->setId($result->fetch(PDO::FETCH_BOTH)['id']); 
         return true;
     }
-    public function showUser(){
-        $sql="SELECT * FROM users WHERE id='$this->id'";
-        $result = $this->conn->query($sql);
-        $response=$result->fetch_array(MYSQLI_ASSOC);
+    public function showUser($pdo){
+        $result=$pdo->prepare("SELECT * FROM users WHERE id=:id");
+        $result->bindParam(":id",$this->id);
+        $result->execute();
+        $response=$result->fetch(PDO::FETCH_BOTH);
         return $response;
     }
 }
